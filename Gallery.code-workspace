@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Gallery",
+			"path": "."
+		},
+		{
+			"name": "folder1",
+			"path": "../../Parallax Effect/folder1"
+		}
+	],
+	"settings": {}
+}
