@@ -20,11 +20,35 @@ body {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center 20%;
+    background-position: center 20%; /* Default position */
     transition: background 1.5s ease-in-out;
     z-index: -1;
+    /* Add isolation for stacking context if needed, but likely okay */
+    /* isolation: isolate; */
 }
 
+/* --- ADD THIS RULE for the left-side gradient --- */
+.background-overlay::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute; /* Position relative to .background-overlay */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* --- The Gradient --- */
+    /* Starts black (70% opacity) on the left, fades to transparent by 60% across */
+    background: linear-gradient(
+        to right,                  /* Direction: Left to Right */
+        rgb(0, 0, 0) 0%,    /* Start Color: Black, 70% opacity at 0% (left edge) */
+        rgba(0, 0, 0, 0) 80%       /* End Color: Fully transparent by 60% width */
+    );
+    /* You can adjust the opacity (0.70) and the fade distance (60%) */
+
+    z-index: 1; /* Ensure it sits visually *on top* of the parent's background image */
+                /* Parent's z-index: -1 keeps both behind content */
+    pointer-events: none; /* Makes the gradient layer non-interactive */
+}
 .container {
     display: flex;
     justify-content: space-between;
@@ -213,3 +237,184 @@ padding-left: 300px;
 /* Ensure Lightbox is above the popup */
 .lightboxOverlay { z-index: 1100; }
 .lightbox { z-index: 1200; }
+
+/* ========================================================== */
+/* ============ VERTICAL SCROLL / AUTO-HEIGHT GRID (v5) ============ */
+/* ========================================================== */
+
+/* --- Basic Tablet Adjustments (Optional, can be refined) --- */
+@media (max-width: 1024px) and (min-width: 768px) {
+    /* Keep horizontal carousel, but adjust sizes */
+    .container { padding: 60px 40px; }
+    .info { max-width: 45%; }
+    h1 { font-size: 45px; }
+    p { font-size: 17px; }
+    .carousel-container { width: 65%; bottom: 50px; -webkit-overflow-scrolling: touch; }
+    .carousel { gap: 25px; padding-left: 25px; }
+    .folder { width: 170px; height: 255px; }
+    .folder-title { font-size: 15px; }
+
+    /* Adjust popup gallery images for tablet */
+    .gallery-content a {
+        flex: 1 1 calc(25% - 8px); /* Example: 4 columns on tablet */
+        max-width: calc(25% - 8px);
+    }
+    .gallery-content a img {
+        width: 100%;
+        height: auto; /* Auto height */
+        object-fit: contain; /* Ensure whole image fits */
+        display: block;
+    }
+}
+
+
+/* --- Mobile Styles (Vertical Folder Scroll & Auto-Height Grid) --- */
+@media (max-width: 767px) {
+
+    /* Allow body scroll, basic text alignment */
+    body {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        text-align: left;
+    }
+
+    /* --- Main Container: Vertical Flex Layout --- */
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px 10px 10px 10px;
+        overflow: hidden;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    /* --- Info Section --- */
+    .info {
+        order: 1;
+        flex-shrink: 0;
+        max-width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        text-align: center;
+        position: static;
+        z-index: auto;
+    }
+
+    h1 { font-size: 26px; margin-bottom: 5px; }
+    p { font-size: 14px; line-height: 1.4; color: #ddd; margin-bottom: 0; }
+
+    /* --- Folder List Container (Vertical Scroll) --- */
+    .carousel-container {
+        order: 2;
+        flex-grow: 1;
+        position: relative;
+        width: 100%;
+        bottom: auto; right: auto; margin-top: 0;
+        overflow-y: auto; overflow-x: hidden;
+        z-index: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 5px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+     .carousel-container::-webkit-scrollbar { display: none; }
+
+    /* --- Folder List Itself --- */
+    .carousel {
+        display: flex; flex-direction: column;
+        align-items: center;
+        padding: 10px 0; padding-left: 0;
+        gap: 15px;
+    }
+
+    /* --- Individual Folders in Vertical List --- */
+    .folder {
+        width: 95%; max-width: 450px;
+        height: 180px; /* Keep fixed height for folder container */
+        flex-shrink: 0; cursor: pointer; display: flex;
+        align-items: center; position: relative; overflow: hidden;
+        background-color: #1a1a1a;
+        border-radius: 8px; /* Add radius to folder container */
+    }
+
+    .folder img {
+        width: 100%; height: 100%;
+        object-fit: cover; /* Image covers the fixed folder height */
+        display: block;
+        border-radius: 8px; /* Match container radius */
+    }
+
+    .folder-title {
+        position: absolute; bottom: 0; left: 0; width: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        color: white; padding: 15px 10px 8px 10px;
+        font-size: 16px; font-weight: bold; text-align: left;
+        border-radius: 0 0 8px 8px; /* Match bottom radius */
+        transform: none; pointer-events: none;
+    }
+
+     .folder:hover {
+        transform: none;
+        box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+        z-index: 10;
+     }
+      .folder:hover .folder-title {
+         background: linear-gradient(to top, rgba(255, 102, 0, 0.7) 0%, rgba(0,0,0,0) 100%);
+     }
+
+    /* --- Popup Gallery Grid Fixes --- */
+    .popup-gallery { padding: 40px 5px 5px 5px; }
+     .popup-gallery .close-btn { top: 10px; right: 10px; font-size: 30px; }
+
+    .gallery-content {
+        display: flex; flex-wrap: wrap;
+        justify-content: flex-start; /* Align items to start */
+        align-items: flex-start; /* Align items to top of row */
+        gap: 5px; padding: 8px; max-width: 100%; border-radius: 8px;
+        background: rgba(30, 30, 30, 0.5);
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
+    }
+
+    /* Style for the link wrapping the image */
+    .gallery-content a {
+        flex: 1 1 calc(33.333% - 4px); /* Flexible basis for 3 columns */
+        max-width: calc(33.333% - 4px); /* Max width for 3 columns */
+        /* REMOVED aspect-ratio */
+        border-radius: 4px;
+        background-color: #282828;
+        display: block; /* Make link a block */
+        line-height: 0; /* Prevent extra space */
+        overflow: hidden; /* Hide potential overflow if needed, and clip radius */
+    }
+
+    /* The image itself - fills width, height is auto */
+    .gallery-content a img {
+        display: block;
+        width: 100%; /* Fill the container's calculated width */
+        height: auto; /* *** Height adjusts to maintain aspect ratio *** */
+        /* REMOVED object-fit: cover */
+        /* REMOVED fixed height */
+        border-radius: 4px; /* Apply radius directly to image */
+        max-height: none;
+    }
+
+    /* Very small screens: maybe 2 columns */
+    @media (max-width: 400px) {
+        .gallery-content a {
+             flex: 1 1 calc(50% - 4px); /* Adjust for 2 columns */
+             max-width: calc(50% - 4px);
+         }
+         h1 { font-size: 22px; }
+         p { font-size: 13px; }
+         .folder { height: 150px; }
+         .folder-title { font-size: 14px; }
+    }
+
+    /* --- Lightbox Z-index reinforcement --- */
+    .lightboxOverlay { z-index: 1100 !important; }
+    .lightbox { z-index: 1200 !important; }
+
+}
