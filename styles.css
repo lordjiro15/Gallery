@@ -1,0 +1,215 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0d0d0d;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    overflow: hidden; /* Prevent body scrollbars */
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 20%;
+    transition: background 1.5s ease-in-out;
+    z-index: -1;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    height: 100vh;
+    padding: 100px;
+    position: relative;
+}
+
+.info {
+    max-width: 600px;
+    z-index: 10;
+}
+
+h1 {
+    font-size:60px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* --- Carousel Container Styling --- */
+.carousel-container {
+    position: absolute;
+    bottom: 80px;
+    right: 5%;
+    width: 65%;
+    overflow-x: hidden;  /* Handles scrolling */
+    overflow-y: hidden;
+    cursor: grab;
+    z-index: 5;
+    /* === PADDING REMOVED FROM HERE === */
+    /* padding: 0 60px; */
+    /* outline: 1px solid red; */ /* DEBUG */
+
+    /* --- Hide Scrollbar --- */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge (Older) */
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+    height: 0; width: 0;
+}
+
+.grabbing { cursor: grabbing; }
+
+/* --- Inner Carousel Row --- */
+.carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 40px;
+padding:30px;
+padding-left: 300px;
+   
+}
+
+/* --- Folder Styling --- */
+/* --- Folder Styling --- */
+.folder {
+    width: 200px;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden; /* Keep this to clip folder content like image */
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background: #222;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    /* === ADD THESE LINES === */
+    margin: 0; /* Ensure no unexpected margin */
+    transform: translateZ(0); /* Promote to own rendering layer (might help clipping/transform bugs) */
+    /* === END OF ADDED LINES === */
+}
+
+/* The :hover rule remains the same */
+.folder:hover {
+    transform: scale(1.15); /* This still applies */
+    /* If the above translateZ doesn't help, you could try adding it here too, but less likely */
+    /* transform: scale(1.15) translateZ(0); */
+    box-shadow: 0 8px 20px rgba(255, 102, 0, 0.4);
+    z-index: 10;
+}
+
+/* Other CSS rules remain the same... */
+.folder img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    pointer-events: none;
+}
+
+.folder-title {
+    position: absolute; bottom: 15px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white; padding: 6px 12px;
+    font-size: 17px; border-radius: 8px;
+    text-align: center; width: 85%;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.folder:hover .folder-title {
+    background: rgba(255, 102, 0, 0.9);
+}
+
+/* --- Pop-up Gallery Styles --- */
+
+.popup-gallery {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    /* MODIFIED: Less opaque background for the main overlay */
+    background: rgba(0, 0, 0, 0.6); /* Was 0.9 */
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 1000;
+    /* Keep padding here to position the content box */
+    padding: 60px 20px 20px 20px;
+    /* Ensure backdrop-filter works by having a transparent layer */
+    /* No backdrop-filter here, just the dimming overlay */
+}
+
+.popup-gallery .close-btn {
+    position: absolute; top: 20px; right: 30px;
+    font-size: 40px; font-weight: bold; color: white;
+    cursor: pointer; z-index: 1001; line-height: 1;
+    /* Add a slight text shadow to make it pop against potentially busy backgrounds */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.gallery-content {
+    display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;
+    max-width: 95%; /* Limits how wide the glass panel gets */
+    max-height: 95%; /* Limits how tall the glass panel gets */
+    overflow-y: auto; /* Allows scrolling within the glass panel */
+
+    /* === NEW: Glassmorphism Styles === */
+    background: rgba(35, 35, 35, 0.4); /* Semi-transparent dark background for the panel */
+    backdrop-filter: blur(15px); /* The key blur effect - adjust px for more/less blur */
+    -webkit-backdrop-filter: blur(15px); /* Safari compatibility */
+    border-radius: 16px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle light border */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft shadow for depth */
+    padding: 30px; /* Adjust padding inside the glass panel */
+    /* === End Glassmorphism Styles === */
+}
+
+/* Optional: Style scrollbar within the glass panel */
+.gallery-content::-webkit-scrollbar {
+    width: 8px;
+}
+.gallery-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.gallery-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    border: 2px solid transparent; /* Creates padding around thumb */
+    background-clip: content-box;
+}
+.gallery-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+.gallery-content a img {
+    width: 300px; height: auto; border-radius: 8px;
+    max-height: 300px;
+    max-width: max-content; /* Ensure images don't overflow grid item */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: block; cursor: pointer; background-color: #1a1a1a; /* Fallback bg */
+    object-fit: cover; /* Ensure images cover the area nicely */
+}
+
+.gallery-content a img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Ensure Lightbox is above the popup */
+.lightboxOverlay { z-index: 1100; }
+.lightbox { z-index: 1200; }
