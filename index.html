@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Carousel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <div class="info">
+            <h1 id="gallery-title">Hover over a folder</h1>
+            <p id="gallery-description">Move your mouse over a folder to see the preview.</p>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="folder" 
+                     data-title="Santa Marta Pateros Fiesta" 
+                     data-desc="February 2025" 
+                     data-bg="folder1/background.jpg" 
+                     data-images='["folder1/image (1).jpg", "folder1/image (2).jpg", "folder1/image (3).jpg", "folder1/image (4).jpg", "folder1/image (5).jpg", "folder1/image (6).jpg", "folder1/image (7).jpg", "folder1/image (8).jpg", "folder1/image (9).jpg", "folder1/image (10).jpg", "folder1/image (11).jpg", "folder1/image (12).jpg", "folder1/image (13).jpg", "folder1/image (14).jpg", "folder1/image (15).jpg", "folder1/image (16).jpg"]'>
+                    <img src="folder1/preview.jpg" alt="Santa Marta Pateros Fiesta">
+                    <div class="folder-title">Santa Marta Pateros Fiesta</div>
+                </div>
+                <div class="folder" 
+                     data-title="Ben & Ben" 
+                     data-desc="October 2022" 
+                     data-bg="folder2/background.jpg" 
+                     data-images='["folder2/image (1).jpg", "folder2/image (2).jpg", "folder2/image (3).jpg", "folder2/image (4).jpg", "folder2/image (5).jpg", "folder2/image (6).jpg", "folder2/image (7).jpg", "folder2/image (8).jpg", "folder2/image (9).jpg"]'>
+                    <img src="folder2/preview.jpg" alt="Santa Marta Pateros Fiesta">
+                    <div class="folder-title">Ben & Ben</div>
+                </div>
+                <div class="folder" 
+                     data-title="Parokya Ni Edgar" 
+                     data-desc="February 2024" 
+                     data-bg="folder3/background.jpg" 
+                     data-images='["folder3/image (1).jpg", "folder3/image (2).jpg", "folder3/image (3).jpg", "folder3/image (4).jpg", "folder3/image (5).jpg", "folder3/image (6).jpg", "folder3/image (7).jpg", "folder3/image (8).jpg"]'>
+                    <img src="folder3/preview.jpg" alt="Santa Marta Pateros Fiesta">
+                    <div class="folder-title">Parokya Ni Edgar</div>
+                </div>
+                <div class="folder" 
+                     data-title="Gloc-9 25th Year Anniversary Celebration" 
+                     data-desc="March 2023" 
+                     data-bg="folder4/background.jpg" 
+                     data-images='["folder4/image (1).jpg", "folder4/image (2).jpg", "folder4/image (3).jpg", "folder4/image (4).jpg", "folder4/image (5).jpg", "folder4/image (6).jpg", "folder4/image (7).jpg", "folder4/image (8).jpg"]'>
+                    <img src="folder4/preview.jpg" alt="Santa Marta Pateros Fiesta">
+                    <div class="folder-title">Gloc-9</div>
+                </div>
+                <div class="folder" 
+                     data-title="Sponge Cola at Long Beach California" 
+                     data-desc="February 2023" 
+                     data-bg="folder5/background.jpg" 
+                     data-images='["folder5/image (1).jpg", "folder5/image (2).jpg", "folder5/image (3).jpg", "folder5/image (4).jpg", "folder5/image (5).jpg"]'>
+                    <img src="folder5/preview.jpg" alt="Santa Marta Pateros Fiesta">
+                    <div class="folder-title">Sponge Cola</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-gallery" id="popup-gallery">
+        <span class="close-btn" onclick="closeGallery()">&times;</span>
+        <div class="gallery-content" id="gallery-content">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
